@@ -36,10 +36,15 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=niteeshkumarvissakoti_sonar_act
       
   quality-gate:
+    name: SonarCloud Quality Gate
     needs: Build-and-analyze
     runs-on: ubuntu-latest
     steps:
-      - name: SonarQube Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
+    - name: SonarCloud Quality Gate Check
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      with:
+        scanMetadataReportFile: .scannerwork/report-task.txt
+        pollingTimeoutSec: 300
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
