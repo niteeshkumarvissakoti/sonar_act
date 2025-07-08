@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  build:
+  Build-and-analyze:
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
@@ -34,10 +34,16 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=niteeshkumarvissakoti_sonar_act
-
-      - name: Archive SonarQube Report
-        if: always() # ensures it runs even if previous step fails
-        uses: actions/upload-artifact@v4
+      
+  quality-gate:
+    name: SonarCloud Quality Gate Check
+    needs: Build-and-analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Quality Gate
+        uses: sonarsource/sonarqube-quality-gate-action@master
         with:
-          name: sonar-reports
-          path: .scannerwork/report-task.txt
+          scanWaitTime: 300
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
