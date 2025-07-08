@@ -39,11 +39,7 @@ jobs:
     needs: Build-and-analyze
     runs-on: ubuntu-latest
     steps:
-      - name: SonarCloud Quality Gate Check
+      - name: SonarQube Quality Gate check
+        id: sonarqube-quality-gate-check
         uses: sonarsource/sonarqube-quality-gate-action@master
-        with:
-          scanMetadataReportFile: .scannerwork/report-task.txt
-          pollingTimeoutSec: 300
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
