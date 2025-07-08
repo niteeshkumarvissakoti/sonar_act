@@ -34,3 +34,10 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=niteeshkumarvissakoti_sonar_act
+
+      - name: Archive SonarQube Report
+        if: always() # ensures it runs even if previous step fails
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-reports
+          path: .scannerwork/report-task.txt
