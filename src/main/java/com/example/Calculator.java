@@ -1,15 +1,13 @@
 package com.example;
 
 public class Calculator {
-    public static void main(String[] args) {
-        Calculator calc = new Calculator();
-        System.out.println("Sum: " + calc.add(2, 3));
-        System.out.println("Product: " + calc.multiply(4, 5));
+    // Add method
+    public int add(int a, int b) {
+        return a + b;
     }
 
-    // Method with long parameter list - common code smell
-    public void longParameterMethod(int a, int b, int c, int d, int e, int f) {
-        // Just a dummy implementation
-        System.out.println(a + b + c + d + e + f);
+    // Multiply method
+    public int multiply(int a, int b) {
+        return a * b;
     }
 }
